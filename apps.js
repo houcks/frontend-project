@@ -9,18 +9,20 @@ function getCurrentPrice(){
     fetch(`https://finnhub.io/api/v1/quote?symbol=${stock}&token=${apiKey}`) 
     .then(response => response.json())
     .then(stockData => writeData(stockData, stock))
-    .then(getCandleData(stock));
+    .then(stockData => getCandleData(stockData,stock));
 });
 } 
 
-function getCandleData(stock){
-    fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${stock}&resolution=1&from=1631022248&to=1631627048&token=${apiKey}`)
+function getCandleData(stockData,stock){
+    let previousMonth = Math.round(new Date(new Date().setDate(new Date().getDate()-30))/1000);
+    let currDay = Math.round((new Date()).getTime() / 1000);
+    fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${stock}&resolution=D&from=${previousMonth}&to=${currDay}&token=${apiKey}`)
     .then(response => response.json())
-    .then(candleData => console.log(candleData))
+    .then(candleData => graphData(candleData))
 }
 function writeData(stockData, stock){
     //gets rid of uneccessary and previous data
-    delete stockData.t
+    //console.log(stockData.t)
     let table = document.getElementById('stockInfo');
     if(table.rows.length > 1){table.deleteRow(1)}
     //create row and add name and stock data 
@@ -37,40 +39,41 @@ function writeData(stockData, stock){
 }
 
 getCurrentPrice();
-/*
-const ctx = document.getElementById('myChart');
+function graphData(){
+    const ctx = document.getElementById('myChart');
 
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});*/
+    });
+}

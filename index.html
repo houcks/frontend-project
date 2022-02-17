@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>                                                     
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,12 @@
     <title>Stock Analyzer</title>
 </head>
 <body>
+    <h1>Current and Past Stock Search</h1>
     <form id="form">
         <input id="input" type="text" placeholder="Stock ticker" autocomplete="off">
         <button type="submit">Current Info</button>
     </form>   
-    <div id="table"></div>
+    <div id="table-div">
     <table id="stockInfo">
         <tr id="head">
             <th>Ticker</th>
@@ -26,9 +27,9 @@
             <th>Previous Close</th>
         </tr>
     </table>
-    <div class="chart">
-        <canvas id="myChart" width="1500" height="600"></canvas>
-        
+    </div>
+    <div class="chart-container" style="position: relative; height: 79vh; width:100vw">
+        <canvas id="myChart" ></canvas>   
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="apps.js"></script>

@@ -19,6 +19,7 @@ function getCandleData(stock) {
     )
         .then((response) => response.json())
         .then((candleData) => graphData(candleData))
+        .catch(error => notFound())
 }
 
 function writeData(stockData, stock) {
@@ -79,27 +80,27 @@ function chartData(prevDate, prevClose, prevHigh, prevLow) {
     const ctx = document.getElementById('myChart');
     new Chart(ctx, {
         data: {
-            labels: prevDate,
+            labels: prevDate.reverse(),
             datasets: [
                 {
                     type: 'bar',
                     barThickness: 6,
                     label: 'Previous Low',
-                    data: prevLow,
+                    data: prevLow.reverse(),
                     backgroundColor: "rgba(240, 0, 0, 1.0)"
                 },
                 {
                     type: 'bar',
                     barThickness: 6,
                     label: 'Previous High',
-                    data: prevHigh,
+                    data: prevHigh.reverse(),
                     backgroundColor: "rgba(0, 200, 0, 0.8)"
                 },
                 {
                     type: 'line',
                     barThickness: 1,
                     label: 'Closing Value',
-                    data: prevClose,
+                    data: prevClose.reverse(),
                     borderColor: 'rgba(255, 255, 255, 1)',
                     backgroundColor: 'rgba(255, 255, 255, 1)'
                 },
@@ -120,6 +121,9 @@ function chartData(prevDate, prevClose, prevHigh, prevLow) {
                 legend:{
                     labels:{
                         color: 'rgba(255, 255, 255, 1)',
+                        font:{
+                            size: 20
+                        },
                     },
                 },
             },
@@ -131,7 +135,10 @@ function chartData(prevDate, prevClose, prevHigh, prevLow) {
                     },
                     ticks:{
                         color:'rgba(255, 255, 255, 1)',
-                        min: (prevLow + prevLow*2)
+                        min: (prevLow + prevLow*2),
+                        font:{
+                            size: 15
+                        },     
                     }                  
                 },
                 y: {
@@ -142,7 +149,10 @@ function chartData(prevDate, prevClose, prevHigh, prevLow) {
                     },
                     ticks:{
                         color:'rgba(255, 255, 255, 1)',
-                        min: (prevLow + prevLow*2)
+                        min: (prevLow + prevLow*2),
+                        font:{
+                            size: 20
+                        },   
                     }              
                 }
             },
@@ -151,6 +161,9 @@ function chartData(prevDate, prevClose, prevHigh, prevLow) {
     });
 }
 
+function notFound(){
+    alert('Stock not found.')
+}
 getCurrentPrice();
 
 

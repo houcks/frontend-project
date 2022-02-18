@@ -79,19 +79,6 @@ button:hover {
 }
 
 /* Forms */
-button:disabled,
-input:disabled {
-
-    background: var(--color-bg-secondary);
-    border-color: var(--color-bg-secondary);
-    color: var(--color-text-secondary);
-    cursor: not-allowed;
-}
-
-button[disabled]:hover {
-    filter: none;
-}
-
 #form {
     display:  flex;
     justify-content: center;
@@ -153,7 +140,6 @@ label {
     border: 1px solid var(--color-bg-secondary);
     border-radius: var(--border-radius);
     border-spacing: 0;
- 
     max-width: 100%;
     overflow-x: auto;
     padding: 0;

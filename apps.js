@@ -1,5 +1,5 @@
 function getCurrentPrice() {
-    const apiKey = "c86jhp2ad3iddpknn4s0";
+    const apiKey = ;
     const form = document.getElementById("form");
     form.addEventListener("submit", (e) => {
         e.preventDefault();

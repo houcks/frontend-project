@@ -13,7 +13,7 @@ function getCurrentPrice() {
 }
 
 function getCandleData(stock) {
-    const alphaApi = "16V2RBTG7QGIGOSS";
+    const alphaApi = "";
     fetch(
         `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=${alphaApi}`
     )
